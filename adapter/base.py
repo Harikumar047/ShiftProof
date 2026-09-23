@@ -22,6 +22,7 @@ class ModelAdapter(abc.ABC):
         self._session = None  # type: ignore
         self._labels = []
         self._preprocess_cfg = {}
+        self._active_provider = None
 
     @abc.abstractmethod
     def load(self, model_path: str, labels_path: str, preprocess_config: Dict[str, Any] = None) -> None:

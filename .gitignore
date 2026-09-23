@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# SQLite & DBs
+*.db
+*.sqlite
+*.sqlite3
+
+# Test artifacts & output directories
+test_captures/
+test_eval_captures/
+test_ui_captures/
+test_export_session.json
+.pytest_cache/
+
+# ONNX weights (optional: models can be downloaded via scripts or stored in release assets if large)
+*.onnx
+
+# OS specific
+.DS_Store
+Thumbs.db

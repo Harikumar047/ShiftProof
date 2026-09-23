@@ -29,6 +29,7 @@ class MobileNetV2Adapter(ModelAdapter):
         self._fallback = False  # True if we had to fall back to CPU
         self._input_name = None
         self._output_name = None
+
         # Default preprocessing for ImageNet‑trained MobileNetV2
         self._preprocess_cfg = {
             "size": (224, 224),
@@ -69,12 +70,13 @@ class MobileNetV2Adapter(ModelAdapter):
             qnn_options = {"backend_path": "QnnHtp.dll"}
             providers.append("QNNExecutionProvider")
             provider_options.append(qnn_options)
-            self._session = ort.InferenceSession(model_path, sess_options=sess_opts, providers=providers, provider_options=provider_options)
+            self._active_provider = self._session.get_providers()[0]
         except Exception as e:
             # Fallback to CPU and record the event
             self._fallback = True
             providers = ["CPUExecutionProvider"]
             self._session = ort.InferenceSession(model_path, sess_options=sess_opts, providers=providers)
+            self._active_provider = self._session.get_providers()[0]
 
         # Cache input/output names for fast inference
         self._input_name = self._session.get_inputs()[0].name
